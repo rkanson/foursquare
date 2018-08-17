@@ -78,6 +78,19 @@ export default {
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
+
+			&:nth-of-type(1) {
+				order: 1;
+			}
+			&:nth-of-type(2) {
+				order: 2;
+			}
+			&:nth-of-type(3) {
+				order: 4;
+			}
+			&:nth-of-type(4) {
+				order: 3;
+			}
 		}
 
 		&-button {

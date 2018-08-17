@@ -42,7 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 .queue {
-	position: fixed;
+	position: absolute;
 	left: 1vw;
 	top: 5%;
 	width: 98vw;
