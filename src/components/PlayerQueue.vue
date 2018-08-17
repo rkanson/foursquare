@@ -4,12 +4,12 @@
     <p class="queue__title">
       Player Queue
     </p>
-    <div class="queue__close" v-on:click="closeQueue">
+    <div class="queue__close" v-on:click="toggleQueue">
       <div class="queue__close--line"></div>
       <div class="queue__close--line"></div>
     </div>
     <ul class="queue__list">
-      <li class="queue__list-item" v-for="player in playerQueue" v-bind:key="player.order">
+      <li class="queue__list-item" v-for="player in notCurrentPlayers" v-bind:key="player.order">
         {{ player.playerName }}
       </li>
     </ul>
@@ -19,43 +19,45 @@
 <script>
 export default {
   name: 'PlayerQueue',
-  data() {
-    return {
-      queueVisible: this.initialQueueVisible,
-      playerQueue: [
-        {
-          playerName: 'RJ Kanson',
-          order: 1
-        },
-        {
-          playerName: 'Tommy Hartman',
-          order: 2,
-        },
-      ],
-    };
-  },
-  props: ['initialQueueVisible'],
   methods: {
-    closeQueue() {
-      this.$emit('close-queue');
+    toggleQueue() {
+      this.$store.commit('toggleQueue');
     }
   },
+  computed: {
+    notCurrentPlayers() {
+      let notCurrentPlayers = [];
+
+      this.$store.state.playerQueue.forEach(function(element) {
+        if(!element.currentlyPlaying == true) {
+          notCurrentPlayers.push(element);
+        }
+      });
+
+      return notCurrentPlayers;
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .queue {
 	position: fixed;
-	left: 0;
+	left: 1vw;
 	top: 5%;
-	width: 100vw;
+	width: 98vw;
 	min-height: 100vh;
 	background-color: #e5e5e5;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
 
 	&__accent {
 		width: 100%;
 		height: 8px;
 		background-color: #3aa0ff;
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
 	}
 
 	&__title {
@@ -96,7 +98,7 @@ export default {
 		margin: 0 auto;
 
 		&-item {
-			padding: 0.5rem;
+			padding: 1rem;
 			margin: 1rem 0;
 			text-align: left;
 			background-color: #ffffff;
