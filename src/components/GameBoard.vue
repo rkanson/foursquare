@@ -26,6 +26,15 @@ export default {
   methods: {
     nextRound() {
       this.$store.commit('incrementRounds')
+      this.$store.state.playerQueue.forEach(element => {
+        if(element.currentlyPlaying == true) {
+          element.totalRounds++;
+        }
+      });
+      if(this.$store.state.currentlyPlayingQueue.length < 4) {
+        let player = this.$store.state.playerQueue.shift();
+        this.$store.state.currentlyPlayingQueue.push(player);
+      }
     },
     toggleQueue() {
       this.$store.commit('toggleQueue')

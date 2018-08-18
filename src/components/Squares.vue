@@ -3,14 +3,14 @@
     <div class="vertical-line"></div>
     <div class="vertical-line"></div>
     <ul class="squares__player-cards">
-      <li class="squares__player-cards-item" v-for="player in currentPlayers" v-bind:key="player.order">
+      <li class="squares__player-cards-item" v-for="(player, index) in this.$store.state.currentlyPlayingQueue" v-bind:key="index">
         <div class="squares__player-cards-item--top-row">
           <p class="squares__player-cards-name">
             {{ player.playerName }}
           </p>
         </div>
         <div class="squares__player-cards-item--bottom-row">
-          <button class="squares__player-cards-button squares__player-cards-button--out">
+          <button class="squares__player-cards-button squares__player-cards-button--out" v-on:click="playerOut(index)">
             Out
           </button>
           <button class="squares__player-cards-button squares__player-cards-button--plus1">
@@ -25,16 +25,23 @@
 <script>
 export default {
   name: 'Squares',
-  computed: {
-    currentPlayers() {
-      let currentPlayers = [];
-      for (let i = 0; i <= 3; i++) {
-        currentPlayers.push(this.$store.state.playerQueue[i]);
-        this.$store.state.playerQueue[i].currentlyPlaying = true;
-      }
-      return currentPlayers;
+  methods: {
+    playerOut(i) {
+      let player = this.$store.state.currentlyPlayingQueue[i];
+      player.currentlyPlaying = false;
+      this.$store.state.playerQueue.push(player);
+      this.$store.state.currentlyPlayingQueue.splice(i, 1);
     }
-  }
+  },
+  created() {
+    for (let i = 0; i <= 3; i++) {
+      let player = this.$store.state.playerQueue[i];
+      this.$store.state.currentlyPlayingQueue.push(player);
+    }
+    for (let i = 0; i <= 3; i++) {
+      this.$store.state.playerQueue.shift();
+    }
+  },
 }
 </script>
 

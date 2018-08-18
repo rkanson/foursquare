@@ -9,47 +9,37 @@ const state = {
   playerQueue: [
     {
       playerName: 'RJ Kanson',
-      currentlyPlaying: false,
       totalRounds: 0,
-      longestStreak: 0,
       pointsEarned: 0,
     },
     {
       playerName: 'Tommy Hartman',
-      currentlyPlaying: false,
       totalRounds: 0,
-      longestStreak: 0,
       pointsEarned: 0,
     },
     {
       playerName: 'Tyler Turnure',
-      currentlyPlaying: false,
       totalRounds: 0,
-      longestStreak: 0,
       pointsEarned: 0,
     },
     {
       playerName: 'Jack Bittner',
-      currentlyPlaying: false,
       totalRounds: 0,
-      longestStreak: 0,
       pointsEarned: 0,
     },
     {
       playerName: 'Ryan Hartman',
-      currentlyPlaying: false,
       totalRounds: 0,
-      longestStreak: 0,
       pointsEarned: 0,
     },
     {
       playerName: 'John Doe',
-      currentlyPlaying: false,
       totalRounds: 0,
-      longestStreak: 0,
       pointsEarned: 0,
     },
   ],
+  currentlyPlayingQueue: [],
+  holdingQueue: [],
 };
 
 export default new Vuex.Store({
