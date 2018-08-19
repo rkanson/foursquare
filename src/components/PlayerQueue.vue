@@ -26,15 +26,7 @@ export default {
   },
   computed: {
     notCurrentPlayers() {
-      let notCurrentPlayers = [];
-
-      this.$store.state.playerQueue.forEach(function(element) {
-        if(!element.currentlyPlaying == true) {
-          notCurrentPlayers.push(element);
-        }
-      });
-
-      return notCurrentPlayers;
+      this.$store.commit('createNotCurrentlyPlaying')
     }
   }
 };

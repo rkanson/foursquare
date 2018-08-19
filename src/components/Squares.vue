@@ -3,7 +3,7 @@
     <div class="vertical-line"></div>
     <div class="vertical-line"></div>
     <ul class="squares__player-cards">
-      <li class="squares__player-cards-item" v-for="(player, index) in this.$store.state.currentlyPlayingQueue" v-bind:key="index">
+      <li class="squares__player-cards-item" v-for="(player, index) in getCurrent" v-bind:key="index">
         <div class="squares__player-cards-item--top-row">
           <p class="squares__player-cards-name">
             {{ player.playerName }}
@@ -26,22 +26,21 @@
 export default {
   name: 'Squares',
   methods: {
-    playerOut(i) {
-      let player = this.$store.state.currentlyPlayingQueue[i];
-      player.currentlyPlaying = false;
-      this.$store.state.playerQueue.push(player);
-      this.$store.state.currentlyPlayingQueue.splice(i, 1);
+    playerOut(index) {
+      this.$store.commit('removePlayer', index);
+      this.$store.commit('incrementRounds');
+      this.$store.commit('incrementTotalRounds');
+      this.$store.commit('updateQueue');
     }
   },
   created() {
-    for (let i = 0; i <= 3; i++) {
-      let player = this.$store.state.playerQueue[i];
-      this.$store.state.currentlyPlayingQueue.push(player);
-    }
-    for (let i = 0; i <= 3; i++) {
-      this.$store.state.playerQueue.shift();
-    }
+    this.$store.commit('createCurrentlyPlaying');
   },
+  computed: {
+    getCurrent() {
+      return this.$store.state.currentlyPlayingQueue;
+    }
+  }
 }
 </script>
 
