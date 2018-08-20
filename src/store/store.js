@@ -6,6 +6,7 @@ Vue.use(Vuex);
 const state = {
   currentRound: 0,
   queueVisible: false,
+  scoreboardVisible: false,
   playerQueue: [
     {
       playerName: 'RJ Kanson',
@@ -47,6 +48,9 @@ export default new Vuex.Store({
     toggleQueue() {
       state.queueVisible = !state.queueVisible;
     },
+    toggleScoreboard() {
+      state.scoreboardVisible = !state.scoreboardVisible;
+    },
     createCurrentlyPlaying() {
       for (let i = 0; i <= 3; i++) {
         let player = state.playerQueue[i];
@@ -55,15 +59,6 @@ export default new Vuex.Store({
       for (let i = 0; i <= 3; i++) {
         state.playerQueue.shift();
       }
-    },
-    createNotCurrentlyPlaying() {
-      let notCurrentPlayers = [];
-      state.playerQueue.forEach(function(element) {
-        if (!element.currentlyPlaying == true) {
-          notCurrentPlayers.push(element);
-        }
-      });
-      return notCurrentPlayers;
     },
     incrementRounds() {
       state.currentRound++;

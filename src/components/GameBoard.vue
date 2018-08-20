@@ -7,11 +7,17 @@
     <transition name="slide">
       <PlayerQueue v-show="$store.state.queueVisible"/>
     </transition>
+    <transition name="slide">
+      <Scoreboard v-show="$store.state.scoreboardVisible"/>
+    </transition>
     <button class="gameboard__button" v-on:click="nextRound">
       Next Round
     </button>
     <button class="gameboard__button" v-on:click="toggleQueue">
       List Players
+    </button>
+    <button class="gameboard__button" v-on:click="toggleScores">
+      Scoreboard
     </button>
   </div>
 </template>
@@ -19,10 +25,11 @@
 <script>
 import Squares from './Squares';
 import PlayerQueue from './PlayerQueue';
+import Scoreboard from './Scoreboard';
 
 export default {
   name: 'GameBoard',
-  components: { Squares, PlayerQueue },
+  components: { Squares, PlayerQueue, Scoreboard },
   methods: {
     nextRound() {
       this.$store.commit('incrementRounds');
@@ -31,6 +38,9 @@ export default {
     },
     toggleQueue() {
       this.$store.commit('toggleQueue')
+    },
+    toggleScores() {
+      this.$store.commit('toggleScoreboard')
     },
   },
 };

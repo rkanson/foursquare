@@ -1,16 +1,16 @@
 <template>
-  <div class="queue">
-    <div class="queue__accent"></div>
-    <p class="queue__title">
-      Player Queue
+  <div class="scoreboard">
+    <div class="scoreboard__accent"></div>
+    <p class="scoreboard__title">
+      Scoreboard
     </p>
-    <div class="queue__close" v-on:click="toggleQueue">
-      <div class="queue__close--line"></div>
-      <div class="queue__close--line"></div>
+    <div class="scoreboard__close" v-on:click="toggleScoreboard">
+      <div class="scoreboard__close--line"></div>
+      <div class="scoreboard__close--line"></div>
     </div>
-    <ul class="queue__list">
-      <li class="queue__list-item" v-for="player in getQueuedPlayers" v-bind:key="player.order">
-        {{ player.playerName }}
+    <ul class="scoreboard__list">
+      <li class="scoreboard__list-item" v-for="player in getAllPlayers" v-bind:key="player.order">
+        {{ player.playerName }} | Total Rounds: {{ player.totalRounds }}
       </li>
     </ul>
   </div>
@@ -18,22 +18,28 @@
 
 <script>
 export default {
-  name: 'PlayerQueue',
+  name: 'PlayerScoreboard',
   methods: {
-    toggleQueue() {
-      this.$store.commit('toggleQueue');
+    toggleScoreboard() {
+      this.$store.commit('toggleScoreboard');
     }
   },
   computed: {
-    getQueuedPlayers() {
-      return this.$store.state.playerQueue;
+    getAllPlayers() {
+      let allPlayers = this.$store.state.playerQueue.concat(this.$store.state.currentlyPlayingQueue);
+
+      let sorted = allPlayers.sort(function (a, b) {
+        return a.totalRounds - b.totalRounds;
+      });
+
+      return sorted.reverse();
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.queue {
+.scoreboard {
 	position: absolute;
 	left: 1vw;
 	top: 5%;
